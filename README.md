@@ -76,7 +76,7 @@ graph TD
     upload-svc --> db
     user-svc --> db
 
-    content-svc --> cache
+    user-svc --> cache
     upload-svc --> cache
 ```
 
