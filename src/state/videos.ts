@@ -3,24 +3,16 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 
+import * as Api from '../api/index.ts';
+
 // TODO switch to RTK Query and implement infinite scroll
 export const fetchVideos = createAsyncThunk(
   'videos/fetchVideos',
-  async () => {
-    const response = await fetch(
-      'https://api.pexels.com/videos/search?query=Nature&orientation=landscape&per_page=20',
-      {
-        headers: {
-          Authorization: 'L7lce58SLsjP2w5pzphMrzikfzXqLSOmHQsO8VJzBRyVUcFLms4aQYQw',
-        }
-      }
-    );
-
-    return response.json();
-  },
+  Api.Videos.getAll
 );
 
 export interface Video {
+  id: number;
   title: string;
   image: string;
   files: Record<number, string>;
@@ -46,19 +38,7 @@ const videosSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchVideos.fulfilled, (state, action) => {
-        const videos = action.payload.videos.map(video => {
-          const { image, url, video_files: videoFiles } = video;
-
-          // Pexels doesn't provide a video title, we extract it from the URL's slug
-          const path = (new URL(url)).pathname;
-          const slug = path.split('/').filter(Boolean).at(-1);
-          const words = slug.split('-').slice(0, -1); // exclude the numeric id from the slug
-          const title = words.map(w => `${w[0].toUpperCase()}${w.slice(1)}`).join(' ');
-
-          const files = videoFiles.reduce((acc, file) => ({ ...acc, [file.width]: file.link}), {});
-          return { title, image, files } as Video;
-        });
-        state.videos = state.videos.concat(videos);
+        state.videos = state.videos.concat(action.payload);
         state.loading = false;
       })
       .addCase(fetchVideos.rejected, (state) => {
@@ -70,4 +50,3 @@ const videosSlice = createSlice({
 export default videosSlice.reducer;
 
 export const selectVideos = state => state.videos.videos;
-
