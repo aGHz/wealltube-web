@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
+import { RootStore, useAppDispatch } from '../state/store.ts';
 import { fetchVideos, selectVideos } from '../state/videos.ts';
 
 import VideoGrid from '../components/VideoGrid.tsx';
 
 function FrontPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const videos = useSelector(selectVideos);
-  const isLoadingVideos = useSelector(state => state.videos.loading);
+  const isLoadingVideos = useSelector((state: RootStore) => state.videos.loading);
 
   useEffect(() => {
     if (isLoadingVideos) return;

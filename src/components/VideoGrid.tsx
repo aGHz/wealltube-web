@@ -1,6 +1,12 @@
+import { Video } from '../types/video.ts';
+
 import VideoCard from './VideoCard.tsx';
 
-function VideoGrid({ videos }) {
+interface VideoGridProps {
+  videos: Video[];
+}
+
+function VideoGrid({ videos }: VideoGridProps) {
   return (
     <div className="grid grid-cols-auto-fill-w-80 gap-8 justify-items-center items-center">
       {videos.map(video => (

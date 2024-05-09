@@ -4,19 +4,15 @@ import {
 } from '@reduxjs/toolkit';
 
 import * as Api from '../api/index.ts';
+import { Video } from '../types/video.ts';
+
+import { RootStore } from './store.ts';
 
 // TODO switch to RTK Query and implement infinite scroll
 export const fetchVideos = createAsyncThunk(
   'videos/fetchVideos',
   Api.Videos.getAll
 );
-
-export interface Video {
-  id: number;
-  title: string;
-  image: string;
-  files: Record<number, string>;
-}
 
 export interface VideosState {
   loading: boolean;
@@ -49,4 +45,4 @@ const videosSlice = createSlice({
 });
 export default videosSlice.reducer;
 
-export const selectVideos = state => state.videos.videos;
+export const selectVideos = (state: RootStore) => state.videos.videos;
