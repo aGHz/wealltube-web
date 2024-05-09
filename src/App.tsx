@@ -1,9 +1,13 @@
+import Header from './Header.tsx';
+import FrontPage from './pages/FrontPage.tsx';
+
 function App() {
   return (
-    <>
-      <h1 className="font-mono text-3xl">We all tube!</h1>
-    </>
-  )
+    <div className="w-full h-full flex flex-col justify-between content-stretch">
+      <Header/>
+      <FrontPage/>
+    </div>
+  );
 }
 
-export default App
+export default App;
