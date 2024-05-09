@@ -109,8 +109,8 @@ correlates users to the videos they upload, to playlists they create, and
 to watching progress (for which it uses the cache service, possibly persisted
 periodically to the DB).
 
-The content service simply keeps track of videos that are available, with
-related metadata and location in storage.
+The content service simply keeps track of videos that are available, along with
+related metadata and file storage locations.
 
 ### Technology recommendations
 
